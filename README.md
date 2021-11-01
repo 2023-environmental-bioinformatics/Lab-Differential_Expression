@@ -1,9 +1,6 @@
 # Lab_GeneExpression
 
-First, hop onto Poseidon and open a new tmux session:\
-`tmux new -s diffex`
-
-Navigate into your user folder for the class, and make a new directory called `diffex` to play in for this lab. You don't need to copy anything from git - we will get a publicly-available example data set through R.
+First, hop onto Poseidon, navigate into your user folder for the class, and make a new directory called `diffex` to play in for this lab. You don't need to copy anything from git - we will get a publicly-available example data set through R.
 
 Request some interactive space on the HPC:\
 `srun -p compute --time=01:00:00 --ntasks-per-node=1 --mem=10gb --pty bash` 
@@ -11,9 +8,12 @@ Request some interactive space on the HPC:\
 Now, let's set up a conda environment to play in:
 
 ```
-conda create --name diffex
-conda activate diffex
-conda install -c r r
+conda create --name lab_de
+conda activate lab_de
+conda config --add channels conda-forge
+conda config --set channel_priority strict
+conda install -c conda-forge r-base
+conda install -c anaconda jupyter
 ```
 
 This will install R in a conda environment. Nearly all gene expression analysis programs work in R, a higher-level coding language that is particularly good for statistics, data management, and plotting. Much like python, a lot of the good stuff in R is done through "add-on" modules for more specialized tasks. In R, these are called packages.
