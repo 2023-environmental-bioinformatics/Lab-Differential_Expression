@@ -12,27 +12,60 @@ conda env create -f
 conda activate RKernel
 ```
 
+Now, let's open up a jupyter notebook to play in R.
+
+If you don't remember your jupyter password, reset it:
+
+```
+jupyter notebook password
+```
+
+From your `Lab_Differential-Expression` folder, spin up a jupyter notebook on the HPC:
+
+```
+jupyter notebook --no-browser --port=8888
+```
+
+...and from a new **local** terminal window, connect your computer to your new notebook:
+
+```
+ssh -N -f -L localhost:8888:localhost:8888 USERNAME@poseidon-[l1 or l2].whoi.edu
+```
+
+Remember to change the `8888` to whatever port you were assigned, add your username, and pick the appropriate login node (`l1` or `l2`).
+
+Now, open a new browser window, connect to jupyter at the appropriate port, and enter your password:
+
+```
+localhost:8888
+```
+
+Open a new notebook in `R`.
+
 Nearly all gene expression analysis programs work in R, a higher-level coding language that is particularly good for statistics, data management, and plotting. Much like python, a lot of the good stuff in R is done through "add-on" modules for more specialized tasks. In R, these are called packages.
 
 *BONUS R factoid for baseball lovers: you can install the entire Sean Lahman Baseball Database in R if you want to try your hand at sabermetrics. The package is called `Lahman`, and it contains statistics from 1871-present.*
 
-First, we need to install some packages we'll want to work with: `DESeq2` (which is used for differential expression), and `pasilla`, which contains an example gene expression data set. You can install R packages in conda, which we'll do here for simplicity. However, there's a more standard approach to installing R packages using the R `install.packages()` command. This approach is outlined briefly in the `r_install-packages.md` file in this repo.
+First, we need to install some packages we'll want to work with: `DESeq2` (which is used for differential expression), and `pasilla`, which contains an example gene expression data set. The standard approach to installing R packages uses the R `install.packages()` command. However, some R packages are available on a more specialized sciencey corner of R called Bioconductor (similar to biopython), and these need to be installed somewhat differently. If `install.packages()` says that a package doesn't exist, search for it online - it is likely installed via Bioconductor instead.
 
-Install `DESeq2` and `pasilla` through conda:
+Install `DESeq2` and `pasilla` (data package) through Bioconductor. You'll need to first install `BiocManager` (the Bioconductor installer) and `Matrix` (required for DESeq2 to run but inexplicably not packaged with it) with the standard approach.
 
 ```
-conda install -c conda-forge r-matrix
-conda install -c bioconda bioconductor-deseq2
-conda install -c bioconda bioconductor-pasilla
+install.packages("BiocManager")
+install.packages("Matrix")
+BiocManager::install("DESeq2")
+BiocManager::install("pasilla")
 ```
 
 Note: We're installing Matrix first, since it's required by DESeq2 but does not install properly as part of the DESeq2 installation. (One of the many compatibility mysteries of R.)
 
-Open `R` interactively by typing:\
+While jupyter works well for running R, lots of folks prefer to run R locally (not on the HPC) because it can be irritating to install R packages in conda. If you prefer this approach, install `R` on your local computer and open it interactively by typing:\
 `R`
 
 Your prompt should change to a greater-than sign:\
 `>`
+
+For a third alternative, RStudio is a very popular interface for R that provides a nice visual interface. (RStudio can only be run on your local computer and is not compatible with the HPC.)
 
 Once packages are installed, you need to load them in your environment (or script) in order to use them. R packages are loaded with this syntax: `library(PACKAGE_NAME)`. Like so many things in UNIX, package names are case-sensitive. Now, load the DESeq2 library that you previously installed:
 
