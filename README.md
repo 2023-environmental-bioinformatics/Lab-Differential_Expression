@@ -1,18 +1,34 @@
 # Lab_GeneExpression
 
-First, hop onto Poseidon and clone this repo. All that's in it is this readme and a .yaml file to set up your conda environment - we will get a publicly-available example data set through R.
+First, hop onto Poseidon and clone this repo. All that's in it is this readme and a .yml file to set up your conda environment - we will get a publicly-available example data set through R.
 
 Request some interactive space on the HPC:\
 `srun -p compute --time=01:30:00 --ntasks-per-node=1 --mem=10gb --pty bash` 
 
-Now, let's set up a conda environment to play in using the provided .yaml file. It can be especially complicated to install R in a conda environment, so I'm giving you a file (courtesy of Zac Tobias) that will let you work with R in a jupyter notebook.
+Now, let's set up a conda environment to play in using the provided .yml file. It can be complicated to install R in a conda environment, so I'm giving you a file that will let you work with R in a jupyter notebook.
 
 ```
-conda env create -f 
-conda activate RKernel
+conda env create -f R_Jupyter.yml
+conda activate r_jupyter
 ```
 
-Now, let's open up a jupyter notebook to play in R.
+Before moving over to Jupyter, we're going to install the packages we need in R first. Open R interactively by typing:\
+`R`
+
+Your prompt should change to a greater-than sign:\
+`>`
+
+First, we need to install some packages we'll want to work with: `DESeq2` (which is used for differential expression), and `pasilla`, which contains an example gene expression data set. The standard approach to installing R packages uses the R `install.packages()` command. However, some R packages are available on a more specialized sciencey corner of R called Bioconductor (similar to biopython), and these need to be installed somewhat differently. If `install.packages()` says that a package doesn't exist, search for it online - it is likely installed via Bioconductor instead.
+
+Install `DESeq2` and `pasilla` (data package) through Bioconductor. You'll need to first install `BiocManager` (the Bioconductor installer).
+
+```
+install.packages("BiocManager")
+BiocManager::install("DESeq2")
+BiocManager::install("pasilla")
+```
+
+Now that we've installed what we need, let's open up a jupyter notebook to play in R. (You *could* install these packages in a notebook, but I prefer the direct approach since you get a lot more output info that helps you figure out if things are installing correctly - and when they are finished.)
 
 If you don't remember your jupyter password, reset it:
 
