@@ -7,6 +7,7 @@ Now, let's set up a conda environment to play in using the provided .yml file. I
 ```
 conda env create -f R_Jupyter.yml
 conda activate r_jupyter
+R -e 'IRkernel::installspec()'
 ```
 
 Before moving over to Jupyter, we're going to install the packages we need in R first. Open R interactively by typing:\
