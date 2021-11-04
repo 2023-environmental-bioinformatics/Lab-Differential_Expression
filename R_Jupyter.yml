@@ -1,0 +1,10 @@
+name: r_jupyter
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - r-base=4.1.1
+  - r-irkernel
+  - r-recommended
+  - jupyter=1.0.0
