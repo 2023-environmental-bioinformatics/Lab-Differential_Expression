@@ -153,6 +153,12 @@ We've actually generated a ton of comparison data, but we need to parse it furth
 res = results(dds, alpha = 0.05)
 ```
 
+For downstream analysis, save the results as a comma-separated file:
+
+```
+write.csv(res, file = "DE_results.csv")
+```
+
 Take a look at your results, and use R to count the number of significantly-different genes.
 
 ```
