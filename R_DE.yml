@@ -1,4 +1,4 @@
-name: r_de
+name: r_diffex
 channels:
   - conda-forge
   - bioconda
