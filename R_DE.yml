@@ -1,10 +1,10 @@
-name: r_d
+name: r_de
 channels:
   - conda-forge
   - bioconda
   - defaults
 dependencies:
-  - r-base=4.1.1
+  - r-base=4.3.1
   - r-irkernel
   - r-recommended
   - jupyter=1.0.0
