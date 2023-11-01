@@ -1,4 +1,4 @@
-name: r_jupyter
+name: r_d
 channels:
   - conda-forge
   - bioconda
