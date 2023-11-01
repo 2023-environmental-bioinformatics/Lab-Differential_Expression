@@ -7,7 +7,7 @@ First, hop onto Poseidon and clone this repo.
 Request some designated space on the HPC:\
 `srun --time=02:00:00 --mem=10gb -n 1 -p compute --pty bash`
 
-Now, let's set up a conda environment to play in using the provided .yml file. It can be complicated to install R in a conda environment, so I'm giving you a file that should let you work with R v4 in a jupyter notebook (you're welcome!).
+Now, let's set up a conda environment to play in using the provided .yml file. It can be complicated to install R in a conda environment, so I'm giving you a file that should let you work with R v4 in a jupyter notebook (the final line helps with that).
 
 ```
 mamba env create -f R_DE.yml
