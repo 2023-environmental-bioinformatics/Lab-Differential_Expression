@@ -4,7 +4,7 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - r-base=4.3.1
+  - r-base=4.1.3
   - r-irkernel
   - r-recommended
   - jupyter=1.0.0
