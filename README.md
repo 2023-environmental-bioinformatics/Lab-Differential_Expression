@@ -4,7 +4,7 @@
 
 First, hop onto Poseidon and clone this repo.
 
-Request some designated space on the HPC:
+Request some designated space on the HPC:\
 `srun --time=02:00:00 --mem=10gb -n 1 -p compute --pty bash`
 
 Now, let's set up a conda environment to play in using the provided .yml file. It can be complicated to install R in a conda environment, so I'm giving you a file that should let you work with R v4 in a jupyter notebook (you're welcome!).
@@ -15,7 +15,8 @@ mamba activate r_diffex
 R -e 'IRkernel::installspec()'
 ```
 
-We're going to install the packages we need directly in R. Open R interactively by typing:\`R`
+We're going to install the packages we need directly in R. Open R interactively by typing:\
+`R`
 
 Your prompt should change to a greater-than sign:\
 `>`
