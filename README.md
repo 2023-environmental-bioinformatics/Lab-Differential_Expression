@@ -158,7 +158,7 @@ head(resOrder)
 
 Now let's think about plotting some of these top counts!
 
-IMPORTANT NOTE: Do NOT directly enter any R commands that output figures on Poseidon (in Jupyter is fine, on the HPC command line is not). Always redirect the output to a file. By default, R prints to screen...and  the HPC doesn’t have a screen. (It will not print to your local computer, since it’s not running locally.) If you do directly enter a command that outputs a figure, you will get nothing more than a sad, empty file named `Rplots.pdf`. If you're using a more complex command with multiple outputs, there are ways to get around this issue, but for now, please just redirect anything you want to look at to pdf using this general flow:
+IMPORTANT NOTE: Do NOT directly enter any R commands that output figures on Poseidon (in Jupyter is fine, on the HPC directly is not). Always redirect the output to a file. By default, R prints to screen...and  the HPC doesn’t have a screen. (It will not print to your local computer, since it’s not running locally.) If you do directly enter a command that outputs a figure, you will get nothing more than a sad, empty file named `Rplots.pdf`. If you're using a more complex command with multiple outputs, there are ways to get around this issue, but for now, please just redirect anything you want to look at to pdf using this general approach:
 
 ```
 pdf(file = "FILENAME.pdf")
