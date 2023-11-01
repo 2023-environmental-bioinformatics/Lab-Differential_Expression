@@ -1,17 +1,21 @@
 # Lab_GeneExpression
 
+## General Setup
+
 First, hop onto Poseidon and clone this repo.
 
-Now, let's set up a conda environment to play in using the provided .yml file. It can be complicated to install R in a conda environment, so I'm giving you a file that will let you work with R v4 in a jupyter notebook (you're welcome!).
+Request some designated space on the HPC:
+`srun --time=02:00:00 --mem=10gb -n 1 -p compute --pty bash`
+
+Now, let's set up a conda environment to play in using the provided .yml file. It can be complicated to install R in a conda environment, so I'm giving you a file that should let you work with R v4 in a jupyter notebook (you're welcome!).
 
 ```
-conda env create -f R_Jupyter.yml
-conda activate r_jupyter
+mamba env create -f R_DE.yml
+mamba activate r_diffex
 R -e 'IRkernel::installspec()'
 ```
 
-Before moving over to Jupyter, we're going to install the packages we need in R first. Open R interactively by typing:\
-`R`
+We're going to install the packages we need directly in R. Open R interactively by typing:\`R`
 
 Your prompt should change to a greater-than sign:\
 `>`
@@ -27,41 +31,15 @@ install.packages("gridExtra")
 BiocManager::install("DESeq2")
 ```
 
-Now that we've installed what we need, let's open up a jupyter notebook to play in R. (You *could* install these packages in a notebook, but I prefer the direct approach since you get a lot more output info that helps you figure out if things are installing correctly - and when they are finished.)
+Note: In theory, you should be able to run all of this in a Jupyter notebook in an R kernel. In practice, sometimes complex R packages can be a bit difficult to install in Jupyter environments. Today we'll work directly in R on the HPC. Later, we'll cover how to make images in R on the screen-less HPC interface.
 
-If you don't remember your jupyter password, reset it:
-
-```
-jupyter notebook password
-```
-
-From your `Lab_Differential-Expression` folder, spin up a jupyter notebook on the HPC:
-
-```
-jupyter notebook --no-browser --port=8888
-```
-
-...and from a new **local** terminal window, connect your computer to your new notebook:
-
-```
-ssh -N -f -L localhost:8888:localhost:8888 USERNAME@poseidon-[l1 or l2].whoi.edu
-```
-
-Remember to change the `8888` to whatever port you were assigned, add your username, and pick the appropriate login node (`l1` or `l2`).
-
-Now, open a new browser window, connect to jupyter at the appropriate port, and enter your password:
-
-```
-localhost:8888
-```
-
-Open a new notebook in `R`.
+## Differential Expression
 
 Nearly all gene expression analysis programs work in R, a higher-level coding language that is particularly good for statistics, data management, and plotting. Much like python, a lot of the good stuff in R is done through "add-on" modules for more specialized tasks. In R, these are called packages.
 
 *BONUS R factoid for baseball lovers: you can install the entire Sean Lahman Baseball Database in R if you want to try your hand at sabermetrics. The package is called `Lahman`, and it contains statistics from 1871-present.*
 
-While jupyter works well for running R, lots of folks prefer to run R locally (not on the HPC) because it can be irritating to install R packages in conda. If you prefer this approach, install `R` on your local computer. For a third alternative, RStudio is a very popular interface for R that provides a nice visual interface. (RStudio can only be run on your local computer and is not compatible with the HPC.)
+While jupyter can work well for running R, lots of folks prefer to run R locally (not on the HPC) because it can be irritating to install R packages in conda. If you prefer this approach, install `R` on your local computer. For a third alternative, RStudio is a very popular interface for R that provides a nice visual interface. (RStudio can only be run on your local computer and is not compatible with the HPC.)
 
 Once packages are installed, you need to load them in your environment (or script) in order to use them. R packages are loaded with this syntax: `library(PACKAGE_NAME)`. Like so many things in UNIX, package names are case-sensitive. Now, load the DESeq2 library that you previously installed:
 
@@ -177,10 +155,22 @@ resOrder = res[order(-res$log2FoldChange),]
 head(resOrder)
 ```
 
+Now let's think about plotting some of these top counts!
+
+IMPORTANT NOTE: Do NOT directly enter any R commands that output figures on Poseidon (in Jupyter is fine, on the HPC command line is not). Always redirect the output to a file. By default, R prints to screen...and  the HPC doesn’t have a screen. (It will not print to your local computer, since it’s not running locally.) If you do directly enter a command that outputs a figure, you will get nothing more than a sad, empty file named `Rplots.pdf`. If you're using a more complex command with multiple outputs, there are ways to get around this issue, but for now, please just redirect anything you want to look at to pdf using this general flow:
+
+```
+pdf(file = "FILENAME.pdf")
+COMMAND(S) THAT MAKE(S) THE FIGURE
+dev.off()
+```
+
 Plot counts for the genes with the biggest adjusted p-values:
 
 ```
 resOrder = res[order(res$padj),]
+
+pdf(file = "DE_top6.pdf")
 
 plots = list()
 for (i in 1:6) {
@@ -189,18 +179,6 @@ for (i in 1:6) {
  plots[[i]] = ggplot(d, aes(x=Acclimation, y=count, color = Source)) + geom_point(position=position_jitter(w=0.1,h=0), size = 3) + theme_bw() + scale_y_log10() + ggtitle(name)
 }
 do.call(grid.arrange,plots)
-```
 
-
-
-### Note on plotting in R on the HPC
-
-IMPORTANT NOTE: Do NOT directly enter any R commands that output figures on Poseidon (in Jupyter is fine, on the HPC command line is not). Always redirect the output to a file. By default, R prints to screen...and  the HPC doesn’t have a screen. (It will not print to your local computer, since it’s not running locally.) If you do directly enter a command that outputs a figure, you will get nothing more than a sad, empty file named `Rplots.pdf`. If you're using a more complex command with multiple outputs, there are ways to get around this issue, but for now, please just redirect anything you want to look at to pdf like this:
-
-```
-pdf(file = "FILENAME.pdf")
-COMMAND THAT MAKES THE FIGURE
 dev.off()
 ```
-
-
