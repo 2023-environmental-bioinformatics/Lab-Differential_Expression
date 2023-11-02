@@ -36,11 +36,11 @@ Note: In theory, you should be able to run all of this in a Jupyter notebook in 
 
 ## Differential Expression
 
-Nearly all gene expression analysis programs work in R, a higher-level coding language that is particularly good for statistics, data management, and plotting. Much like python, a lot of the good stuff in R is done through "add-on" modules for more specialized tasks. In R, these are called packages.
+Nearly all gene expression analysis programs work in R. Much like python, a lot of the good stuff in R is done through "add-on" modules (packages) for more specialized tasks.
 
 *BONUS R factoid for baseball lovers: you can install the entire Sean Lahman Baseball Database in R if you want to try your hand at sabermetrics. The package is called `Lahman`, and it contains statistics from 1871-present.*
 
-While jupyter can work well for running R, lots of folks prefer to run R locally (not on the HPC) because it can be irritating to install R packages in conda. If you prefer this approach, install `R` on your local computer. For a third alternative, RStudio is a very popular interface for R that provides a nice visual interface. (RStudio can only be run on your local computer and is not compatible with the HPC.)
+Many folks prefer to run R locally (not on the HPC) because it can be finicky to install R packages and deal with images on the HPC. If you want a fuller-featured interface, you can use R on the HPC via Jupyter (should be possible with this class environment), or even RStudio with some legwork. Arianna provides some guidance for setting up RStudio on the HPC [here](https://alexanderlabwhoi.github.io/post/2021-03-17-xquartz/). For simplicity, today we're just going to work directly in R on Poseidon.
 
 Once packages are installed, you need to load them in your environment (or script) in order to use them. R packages are loaded with this syntax: `library(PACKAGE_NAME)`. Like so many things in UNIX, package names are case-sensitive. Now, load the DESeq2 library that you previously installed:
 
@@ -50,7 +50,7 @@ library(ggplot2)
 library(gridExtra)
 ```
 
-Now, we'll run through a simple DE analysis. I've provided you with two files: `Rh_NC_sal_counts_no-contam.tsv` contains raw read counts (number of reads from each sample mapping to each contig); and `Rh_NC_sal_sample-info.csv` contains metadata on samples, including important information on experimental exposures.
+Now, we'll run through a simple DE analysis, following along with [the very detailed DESeq2 vignette](https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html). I've provided you with two files: `Rh_NC_sal_counts_no-contam.tsv` contains raw read counts (number of reads from each sample mapping to each contig); and `Rh_NC_sal_sample-info.csv` contains metadata on samples, including important information on experimental exposures.
 
 First we need to load the samples:
 
