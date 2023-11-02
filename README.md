@@ -183,3 +183,9 @@ do.call(grid.arrange,plots)
 
 dev.off()
 ```
+
+Let's save our session info, in case we want to revisit our results without rerunning everything:\
+`save.image(file="DE_lab.RData")`
+
+To pick up where we left off:\
+`load(file="DE_lab.RData")`
